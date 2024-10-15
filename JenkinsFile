@@ -1,0 +1,24 @@
+pipeline {
+    agent any  // Jenkins will use any available machine (agent) to run this pipeline
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Tell Jenkins to clone the Git repository
+                git url: 'https://github.com/20BQ1A0458/helloworld.git', credentialsId: 'github_creds'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Run the Hello World program (adjust this step based on the language you're using)
+                sh 'python hello_world.py'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Optional: a deployment step (for now, this just prints a message)
+                echo 'Deployment step (optional)'
+            }
+        }
+    }
+}
