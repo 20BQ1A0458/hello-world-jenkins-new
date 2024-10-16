@@ -1,24 +1,53 @@
 pipeline {
-    agent any  // Jenkins will use any available machine (agent) to run this pipeline
-    
+    agent any
+
+    environment {
+        PYTHON_VERSION = '3.8'
+    }
+
     stages {
-        stage('Clone Repository') {
-            steps {
-                // Tell Jenkins to clone the Git repository
-                git url: 'https://github.com/20BQ1A0458/helloworld.git', credentialsId: 'github_creds'
-            }
-        }
+        // Build stage
         stage('Build') {
             steps {
-                // Run the Hello World program (adjust this step based on the language you're using)
-                sh 'python hello_world.py'
+                echo 'Building the project...'
+                sh 'python --version'  // Verify Python is installed
+                sh '''
+                if ! python --version | grep $PYTHON_VERSION; then
+                    echo "Python version does not match"
+                    exit 1
+                fi
+                '''
             }
         }
+
+        // Test stage
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'python hello.py'  // Run your Hello World program
+            }
+        }
+
+        // Deploy stage
         stage('Deploy') {
             steps {
-                // Optional: a deployment step (for now, this just prints a message)
-                echo 'Deployment step (optional)'
+                echo 'Deploying the application...'
+                // Simulate deployment (you can replace this with real deployment steps)
+                echo 'Application deployed successfully!'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()  // Clean workspace after build
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
