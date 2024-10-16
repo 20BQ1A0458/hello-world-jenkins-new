@@ -1,0 +1,37 @@
+pipeline {
+    agent any  // This means the pipeline can run on any available agent
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm  // Checks out the code from the Git repository
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the project...'  // Print a message
+                // If you have a build command, place it here
+                bat 'python hello.py'  // Replace with your actual build command
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'  // Print a message
+                // Assuming you have a test file, let's run it
+                bat 'pytest tests/'  // This will run tests in a folder called 'tests'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project...'  // Print a message
+                // You can add commands here to deploy your application
+                // For example, copying files to a server or running deployment scripts
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up...'  // Print a cleanup message
+            cleanWs()  // Clean up the workspace
+        }
+    }
+}
