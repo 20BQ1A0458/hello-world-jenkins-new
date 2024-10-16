@@ -1,53 +1,38 @@
 pipeline {
     agent any
-
-    environment {
-        PYTHON_VERSION = '3.8'
-    }
-
     stages {
-        // Build stage
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'python --version'  // Verify Python is installed
-                sh '''
-                if ! python --version | grep $PYTHON_VERSION; then
-                    echo "Python version does not match"
-                    exit 1
-                fi
-                '''
+                // Use 'bat' for Windows batch commands instead of 'sh'
+                bat 'echo Hello World'
             }
         }
-
-        // Test stage
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'python hello.py'  // Run your Hello World program
+                // Include any test scripts here, e.g., calling batch or test commands
+                bat 'echo Testing...'
             }
         }
-
-        // Deploy stage
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
-                // Simulate deployment (you can replace this with real deployment steps)
-                echo 'Application deployed successfully!'
+                echo 'Deploying the project...'
+                // Deployment steps if applicable
+                bat 'echo Deployment step'
             }
         }
     }
-
     post {
         always {
             echo 'Cleaning up workspace...'
-            deleteDir()  // Clean workspace after build
-        }
-        success {
-            echo 'Build succeeded!'
+            deleteDir()
         }
         failure {
             echo 'Build failed!'
+        }
+        success {
+            echo 'Build succeeded!'
         }
     }
 }
