@@ -3,28 +3,29 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
+                // Pull code from GitHub
                 git url: 'https://github.com/20BQ1A0458/hello-world-jenkins-new.git'
             }
         }
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // Replace with your actual build command
-                sh 'mvn clean install'  
+                // Install project dependencies using pip
+                bat 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Replace with your actual testing command
-                sh 'pytest'
+                // Run Python tests using pytest
+                bat 'pytest'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                // Replace with your actual deployment command
-                sh 'docker build -t myapp . && docker run -d -p 8080:8080 myapp'
+                // Run the main application script
+                bat 'python your_script.py'  // Replace 'your_script.py' with your main script file
             }
         }
     }
