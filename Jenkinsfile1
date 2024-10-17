@@ -3,29 +3,29 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
-                // Pull code from GitHub
                 git url: 'https://github.com/20BQ1A0458/hello-world-jenkins-new.git'
             }
         }
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // Install project dependencies using pip
+                // Installing dependencies from requirements.txt
+                bat 'python -m pip install --upgrade pip'  // Ensures pip is upgraded
                 bat 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Run Python tests using pytest
+                // Running pytest
                 bat 'pytest'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                // Run the main application script
-                bat 'python your_script.py'  // Replace 'your_script.py' with your main script file
+                // No real deployment step here, so echo a message
+                echo 'No deployment steps specified.'
             }
         }
     }
