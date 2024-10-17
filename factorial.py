@@ -1,10 +1,18 @@
-
 def factorial(n):
-    if n == 0 or n == 1:
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers.")
+    elif n == 0:
         return 1
     else:
         return n * factorial(n - 1)
 
+# Example usage (for testing purposes)
 if __name__ == "__main__":
-    number = 5
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: python factorial.py <number>")
+        sys.exit(1)
+
+    number = int(sys.argv[1])
     print(f"Factorial of {number} is {factorial(number)}")
