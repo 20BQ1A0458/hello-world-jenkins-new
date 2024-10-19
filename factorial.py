@@ -1,7 +1,7 @@
 def factorial(n):
     if n < 0:
 <<<<<<< HEAD
-        raise ValueError("The input which u want hhh to give hi hello must be a non-negative integer.")
+        raise ValueError("The last try.")
 =======
         raise ValueError("Ttring to trigger the webhokks just for functinality testing.")
 >>>>>>> da1fdf8105d1027b80d3e8cf672bf809162706d7
